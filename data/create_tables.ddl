@@ -1,11 +1,11 @@
 create schema BattleBoats;
-drop table BattleBoats.Player;
 drop table BattleBoats.Navy;
+drop table BattleBoats.Player;
 
 create table BattleBoats.Player (
 	id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	username VARCHAR(40) NOT NULL,
-	password VARCHAR(40),
+	password VARCHAR(40),	
 	email VARCHAR(128),
 	subscription_level INTEGER,
 	display_name VARCHAR(25),
