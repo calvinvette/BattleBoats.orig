@@ -3,11 +3,40 @@ package com.battleboats.data;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 public class PlayerJPADAO {
+	// JPA Uses Dependency Injection
+	// PersistenceContext uses EntityManagerFactory to push in an instance
+	// But ONLY in a "managed" environment like
+	// Full JEE: JBoss Wildfly, WebSphere, GlassFish
+	// But not in non-managed environments like:
+	// Web Profile JEE - Tomcat, Jetty
+	// Swing, JavaFX, Java "main" apps, JUnit tests
+	@PersistenceContext
 	private EntityManager entityManager;
 	
+	
+	// Use EntityManagerFactory in non-managed cases
+	@PersistenceUnit(unitName="BattleBoats")
+	private static EntityManagerFactory entityManagerFactory;
+	
+	public static EntityManagerFactory getEntityManagerFactory() {
+		if (entityManagerFactory == null) {
+			// Painful, 1-time bootstrapping
+			// Keep this semi-permanently in memory during application lifetime
+			entityManagerFactory = Persistence.createEntityManagerFactory("BattleBoats");
+		}
+		return entityManagerFactory;
+	}
+	
 	public EntityManager getEntityManager() {
+		if (entityManager == null) {
+			entityManager = getEntityManagerFactory().createEntityManager();
+		}
 		return entityManager;
 	}
 
