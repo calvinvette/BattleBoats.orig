@@ -1,6 +1,4 @@
 create schema BattleBoats;
-drop table BattleBoats.Navy;
-drop table BattleBoats.Player;
 
 create table BattleBoats.Player (
 	id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
