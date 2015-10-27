@@ -3,6 +3,8 @@ package com.battleboats.data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,7 +15,9 @@ import javax.persistence.Table;
 @Table(name = "NAVY", schema = "BATTLEBOATS")
 public class Navy implements java.io.Serializable {
 
-	private int id;
+	
+	private Integer id = -1;
+	
 	private Integer budget;
 	private Integer player;
 
@@ -29,9 +33,9 @@ public class Navy implements java.io.Serializable {
 		this.budget = budget;
 		this.player = player;
 	}
-
+	
 	@Id
-
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
