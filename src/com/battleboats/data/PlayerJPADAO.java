@@ -19,12 +19,11 @@ public class PlayerJPADAO {
 	// Swing, JavaFX, Java "main" apps, JUnit tests
 	@PersistenceContext
 	private EntityManager entityManager;
-	
-	
+
 	// Use EntityManagerFactory in non-managed cases
-	@PersistenceUnit(unitName="BattleBoats")
+	@PersistenceUnit(unitName = "BattleBoats")
 	private static EntityManagerFactory entityManagerFactory;
-	
+
 	public static EntityManagerFactory getEntityManagerFactory() {
 		if (entityManagerFactory == null) {
 			// Painful, 1-time bootstrapping
@@ -33,7 +32,7 @@ public class PlayerJPADAO {
 		}
 		return entityManagerFactory;
 	}
-	
+
 	public EntityManager getEntityManager() {
 		if (entityManager == null) {
 			entityManager = getEntityManagerFactory().createEntityManager();
@@ -61,7 +60,7 @@ public class PlayerJPADAO {
 		}
 		return player;
 	}
-	
+
 	public Player update(Player player) {
 		// Transient Objects: new or recently DB-deleted
 		// Managed: auto-update
@@ -70,12 +69,12 @@ public class PlayerJPADAO {
 		// forces updates to happen
 		return getEntityManager().merge(player);
 	}
-	
+
 	public Player delete(Player player) {
 		getEntityManager().remove(player); // DELETE FROM PLAYER WHERE...
 		return player; // no longer valid player in DB
 	}
-	
+
 	public Player findById(Integer id) {
 		return getEntityManager().find(Player.class, id);
 	}
@@ -83,10 +82,15 @@ public class PlayerJPADAO {
 	public Player findByUserName(String userName) {
 		return null;
 	}
-	
+
 	public List<Player> findByEmail(String email) {
 		return null;
 	}
-	
-	
+
+	public List<Player> findAll() {
+		return getEntityManager()
+				.createQuery("select p from Player p", Player.class)
+				.getResultList();
+	}
+
 }

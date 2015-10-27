@@ -61,6 +61,13 @@ public class PlayerRESTService {
 		return dao.findByEmail(email);
 	}
 
+	@GET
+	// Full URL: http://localhost:8080/BattleBoats/rest/players
+	public List<Player> findAll() {
+		return dao.findAll();
+	}
+	
+	
 	//@Path("/firstName/{first}/lastName/last")
 	// Full URL: http://localhost:8080/BattleBoats/rest/firstName/Hermione/lastName/Granger
 	//public List<Player> findByFirstLast(@PathParam("first") String firstName,
