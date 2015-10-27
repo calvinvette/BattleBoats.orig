@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlType;
 		"location",
 		"ranking",
 		"age",
-		"gender",
-		"avatar"		
+		"gender"//,
+		//"avatar"		
 })
 @XmlRootElement
 public class Player implements java.io.Serializable {
@@ -47,7 +47,7 @@ public class Player implements java.io.Serializable {
 	// @XmlTransient here would suppress XML generation of age
 	private Integer age;
 	private String gender;
-	private byte[] avatar;  // Byte[]
+	//private byte[] avatar;  // Byte[]
 
 	public Player() {	
 	}
@@ -58,7 +58,9 @@ public class Player implements java.io.Serializable {
 	}
 
 	public Player(int id, String username, String password, String email, Integer subscriptionLevel, String displayName,
-			String location, Integer ranking, Integer age, String gender, byte[] avatar) {
+			String location, Integer ranking, Integer age, String gender
+			//, byte[] avatar
+			) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -69,7 +71,7 @@ public class Player implements java.io.Serializable {
 		this.ranking = ranking;
 		this.age = age;
 		this.gender = gender;
-		this.avatar = avatar;
+		//this.avatar = avatar;
 	}
 
 	@Id
@@ -164,13 +166,13 @@ public class Player implements java.io.Serializable {
 		this.gender = gender;
 	}
 
-	@Column(name = "AVATAR")
-	public byte[] getAvatar() {
-		return this.avatar;
-	}
-
-	public void setAvatar(byte[] avatar) {
-		this.avatar = avatar;
-	}
+//	@Column(name = "AVATAR")
+//	public byte[] getAvatar() {
+//		return this.avatar;
+//	}
+//
+//	public void setAvatar(byte[] avatar) {
+//		this.avatar = avatar;
+//	}
 
 }
