@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
@@ -45,7 +46,19 @@ public class PlayerJPADAO {
 	}
 
 	public Player insert(Player player) {
-		getEntityManager().persist(player); // INSERT INTO PLAYER, Gen ID
+		EntityTransaction tx = getEntityManager().getTransaction();
+		try {
+			tx.begin();
+			getEntityManager().persist(player); // INSERT INTO PLAYER, Gen ID
+			tx.commit();
+		} catch (Exception e) {
+			try {
+				tx.rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 		return player;
 	}
 	
