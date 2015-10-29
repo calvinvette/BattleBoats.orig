@@ -2,6 +2,8 @@ package com.battleboats.data;
 
 import java.util.List;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -61,17 +63,46 @@ public class PlayerJPADAO {
 		return player;
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Player update(Player player) {
 		// Transient Objects: new or recently DB-deleted
 		// Managed: auto-update
 		// Detached: EM that found object earlier no longer in memory
 		// merge() pushes a detached object back in to "managed" mode
 		// forces updates to happen
-		return getEntityManager().merge(player);
+		
+		Player updatedPlayer = null;
+		EntityTransaction tx = getEntityManager().getTransaction();
+		try {
+			tx.begin();
+			updatedPlayer = getEntityManager().merge(player);
+			tx.commit();
+		} catch (Exception e) {
+			try {
+				tx.rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		return updatedPlayer;
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Player delete(Player player) {
-		getEntityManager().remove(player); // DELETE FROM PLAYER WHERE...
+		EntityTransaction tx = getEntityManager().getTransaction();
+		try {
+			tx.begin();
+			getEntityManager().remove(player); // DELETE FROM PLAYER WHERE...
+			tx.commit();
+		} catch (Exception e) {
+			try {
+				tx.rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 		return player; // no longer valid player in DB
 	}
 

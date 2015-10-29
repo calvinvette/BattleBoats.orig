@@ -166,6 +166,13 @@ public class Player implements java.io.Serializable {
 		this.gender = gender;
 	}
 
+	@Override
+	public String toString() {
+		return "Player [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", subscriptionLevel=" + subscriptionLevel + ", displayName=" + displayName + ", location=" + location
+				+ ", ranking=" + ranking + ", age=" + age + ", gender=" + gender + "]";
+	}
+
 //	@Column(name = "AVATAR")
 //	public byte[] getAvatar() {
 //		return this.avatar;
